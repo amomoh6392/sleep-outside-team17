@@ -9,6 +9,6 @@ Team Members:
 6;
 7;
 
-trello board link: 
+trello board link: https://trello.com/b/hDz4EYdg
 
 Render link: https://sleep-outside-team17.onrender.com/
