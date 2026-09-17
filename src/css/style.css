@@ -130,6 +130,9 @@ button {
 .cart:hover svg {
   fill: gray;
 }
+.hide {
+  display: none;
+}
 
 /* End cart icon styles */
 
@@ -206,10 +209,11 @@ button {
 /* Start cart list card styles */
 .cart-card {
   display: grid;
-  grid-template-columns: 25% auto 15%;
   font-size: var(--small-font);
   /* max-height: 120px; */
   align-items: center;
+  grid-template-columns: 25% auto 15% 10%;
+  position: relative;
 }
 
 .cart-card__image {
@@ -234,6 +238,24 @@ button {
 .cart-card__quantity {
   grid-row: 1;
   grid-column: 3;
+}
+
+.cart-list {
+  flex-flow: column nowrap;
+}
+
+.cart-card__remove {
+  grid-row: 1 / 3;
+  grid-column: 4;
+  justify-self: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.cart-card__remove:hover {
+  transform: scale(1.2);
+  color: #e74c3c;
 }
 
 .cart-card__price {
