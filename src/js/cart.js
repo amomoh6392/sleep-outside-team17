@@ -1,3 +1,4 @@
+import { getLocalStorage, loadHeaderFooter } from "./utils.mjs";
 import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
@@ -58,3 +59,5 @@ function removeFromCart(id) {
 }
 
 renderCartContents();
+
+loadHeaderFooter();
