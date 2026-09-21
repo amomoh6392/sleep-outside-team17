@@ -6,16 +6,10 @@ const dataSource = new ProductData("tents");
 
 const listElement = document.querySelector(".product-list");
 
-const productList = new ProductList(
-  "tents",
-  dataSource,
-  listElement
-);
+const productList = new ProductList("tents", dataSource, listElement);
 
 productList.init();
 
-const alert = new Alert(
-  "Weekend Sale! Get 20% off all tents."
-);
+const alert = new Alert("Weekend Sale! Get 20% off all tents.");
 
 alert.render();
