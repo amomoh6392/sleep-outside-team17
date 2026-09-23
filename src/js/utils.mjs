@@ -41,3 +41,28 @@ export function renderListWithTemplate(
     position, htmlStrings.join("")
   );
 }
+
+export function renderWithTemplate(template, parentElement, data, callback) {
+  parentElement.innerHTML = template;
+  if (callback) {
+    callback(data);
+  }
+}
+
+export async function loadTemplate(path) {
+  const response = await fetch(path);
+  if (!response.ok) {
+    throw new Error(`Unable to load template: ${path}`);
+  }
+  return response.text();
+}
+
+export async function loadHeaderFooter() {
+  const [headerTemplate, footerTemplate] = await Promise.all([
+    loadTemplate("/partials/header.html"),
+    loadTemplate("/partials/footer.html"),
+  ]);
+
+  renderWithTemplate(headerTemplate, qs("#main-header"));
+  renderWithTemplate(footerTemplate, qs("#main-footer"));
+}
