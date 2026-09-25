@@ -1,16 +1,39 @@
-import { getLocalStorage } from "./utils.mjs";
+import {
+  getLocalStorage,
+  loadHeaderFooter,
+  setLocalStorage,
+} from "./utils.mjs";
 
 function renderCartContents() {
-  const cartItems = getLocalStorage("so-cart");
+  const cartItems = getLocalStorage("so-cart") || [];
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
+
+  const cartFooter = document.querySelector(".cart-footer");
+
+  if (cartItems.length > 0) {
+    cartFooter.classList.remove("hide");
+    const total = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
+    const cartTotal = document.querySelector(".cart-total");
+    cartTotal.innerHTML = `Total: $${total.toFixed(2)}`;
+  } else {
+    cartFooter.classList.add("hide");
+  }
+
+  const removeButtons = document.querySelectorAll(".cart-card__remove");
+  removeButtons.forEach((button) => {
+    button.addEventListener("click", (event) => {
+      const itemId = event.target.getAttribute("data-id");
+      removeFromCart(itemId);
+    });
+  });
 }
 
 function cartItemTemplate(item) {
   const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
-      src="${item.Image}"
+      src="${item.Images.PrimaryMedium}"
       alt="${item.Name}"
     />
   </a>
@@ -20,9 +43,23 @@ function cartItemTemplate(item) {
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
   <p class="cart-card__quantity">qty: 1</p>
   <p class="cart-card__price">$${item.FinalPrice}</p>
+  
+  <span class="cart-card__remove" data-id="${item.Id}">&times;</span>
 </li>`;
 
   return newItem;
 }
+function removeFromCart(id) {
+  let cartItems = getLocalStorage("so-cart");
+  const itemIndex = cartItems.findIndex((item) => item.Id === id);
+  if (itemIndex > -1) {
+    cartItems.splice(itemIndex, 1);
+    setLocalStorage("so-cart", cartItems);
+
+    renderCartContents();
+  }
+}
 
 renderCartContents();
+
+loadHeaderFooter();
