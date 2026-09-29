@@ -62,8 +62,8 @@ export async function loadTemplate(path) {
 }
 
 export async function loadHeaderFooter() {
-  const headerTemplate = await loadTemplate("../partials/header.html");
-  const footerTemplate = await loadTemplate("../partials/footer.html");
+  const headerTemplate = await loadTemplate("/partials/header.html");
+  const footerTemplate = await loadTemplate("/partials/footer.html");
 
   const headerElement = document.querySelector("#main-header");
   const footerElement = document.querySelector("#main-footer");
@@ -71,4 +71,14 @@ export async function loadHeaderFooter() {
 
   renderWithTemplate(headerTemplate, headerElement);
   renderWithTemplate(footerTemplate, footerElement);
+}
+export function formDataToJSON(formElement) {
+  const formData = new FormData(formElement);
+  const convertedJSON = {};
+
+  formData.forEach(function (value, key) {
+    convertedJSON[key] = value;
+  });
+
+  return convertedJSON;
 }

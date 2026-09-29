@@ -8,7 +8,7 @@ function renderCartContents() {
   const cartItems = getLocalStorage("so-cart") || [];
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
-
+  console.log("CART ITEMS:", cartItems);
   const cartFooter = document.querySelector(".cart-footer");
 
   if (cartItems.length > 0) {
@@ -30,6 +30,7 @@ function renderCartContents() {
 }
 
 function cartItemTemplate(item) {
+  console.log("CART ITEM:", item);
   const newItem = `<li class="cart-card divider">
   <a href="#" class="cart-card__image">
     <img
