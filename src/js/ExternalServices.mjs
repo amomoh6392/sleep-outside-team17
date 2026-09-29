@@ -8,37 +8,18 @@ function convertToJson(res) {
   }
 }
 
-export default class ProductData {
-  async getData(category) {
+export default class ExternalServices {
+ async getData(category) {
     const response = await fetch(`${baseURL}products/search/${category}`);
     const data = await convertToJson(response);
     return data.Result;
-export default class ExternalServices {
-  constructor(category) {
-    this.category = category;
-    this.path = `/json/${this.category}.json`;
   }
-  getData() {
-    return fetch(this.path)
-      .then(convertToJson)
-      .then((data) => data);
-  }
+  
 
   async findProductById(id) {
     const response = await fetch(`${baseURL}product/${id}`);
     const data = await convertToJson(response);
     return data.Result;
-  }
-  async checkout(orderData) {
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(orderData)
-    }
-    const response = await fetch("https://wdd330-backend-osp8.onrender.com/checkout", options);
-    return convertToJson(response);
   }
   async checkout(orderData) {
     const options = {
