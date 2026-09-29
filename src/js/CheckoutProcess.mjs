@@ -1,4 +1,4 @@
-import { formDataToJSON, getLocalStorage, loadHeaderFooter } from "./utils.mjs";
+import { formDataToJSON, getLocalStorage, loadHeaderFooter, alertMessage } from "./utils.mjs";
 import ExternalServices from "./ExternalServices.mjs"
 loadHeaderFooter();
 function packageItems(items) {
@@ -14,7 +14,7 @@ function packageItems(items) {
 }
 
 export default class CheckoutProcess {
-  constructor(key,outputSelector,services ) {
+  constructor(key, outputSelector, services) {
     this.key = key;
     this.outputSelector = outputSelector;
     this.list = [];
@@ -28,7 +28,7 @@ export default class CheckoutProcess {
     const cartItems = getLocalStorage(this.key) || [];
     this.list = cartItems
     this.itemTotal = 0;
-    for (let i = 0; i < this.list.length; i++){
+    for (let i = 0; i < this.list.length; i++) {
       const item = this.list[i];
       this.itemTotal = this.itemTotal + item.FinalPrice;
     }
@@ -52,14 +52,28 @@ export default class CheckoutProcess {
     total.innerText = `$${this.orderTotal.toFixed(2)}`;
   }
   async checkout(form) {
-    const formData = formDataToJSON(form);
-    formData.orderDate = new Date().toISOString();
-    formData.items = packageItems(this.list);
-    formData.orderTotal = this.orderTotal;
-    formData.tax = this.tax;
-    formData.shipping = this.shipping;
-    console.log(formData);
-    await this.services.checkout(formData);
+    try {
+      const formData = formDataToJSON(form);
+      formData.orderDate = new Date().toISOString();
+      formData.items = packageItems(this.list);
+      formData.orderTotal = this.orderTotal;
+      formData.tax = this.tax;
+      formData.shipping = this.shipping;
+
+      await this.services.checkout(formData);
+
+      localStorage.removeItem(this.key);
+
+      window.location.href = "./success.html";
+
+    }
+  
+    catch (err) {
+      console.log(err);
+      const message = Object.values(err.message)[0];
+      alertMessage(message);
+    }
+
   }
 }
 const services = new ExternalServices();
@@ -70,8 +84,16 @@ const zip = document.querySelector("#zip");
 zip.addEventListener("change", () => {
   process.calculateOrderTotal();
 });
-const form = document.querySelector("#checkout")
+const form = document.querySelector("#checkout");
+
 form.addEventListener("submit", (event) => {
-  event.preventDefault()
-  process.checkout(form);
+  event.preventDefault();
+
+  if (form.checkValidity()) {
+    process.checkout(form);
+  } else {
+    form.reportValidity();
+  }
 });
+
+
