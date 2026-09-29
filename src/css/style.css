@@ -304,13 +304,12 @@ button {
     font-size: inherit;
     grid-template-columns: 150px auto 15%;
   }
-  
 }
 @media screen and (max-width: 700px) {
-    .categories {
-      grid-template-columns: repeat(2, 1fr);
-    }
+  .categories {
+    grid-template-columns: repeat(2, 1fr);
   }
+}
 footer {
   font-size: var(--small-font);
   padding: 1em;
