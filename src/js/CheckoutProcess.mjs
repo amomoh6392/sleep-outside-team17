@@ -64,7 +64,7 @@ export default class CheckoutProcess {
 
       localStorage.removeItem(this.key);
 
-      window.location.href = "./success.html";
+      window.location.href = "/checkout/success.html";
 
     }
   
