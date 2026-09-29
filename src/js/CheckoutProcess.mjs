@@ -1,8 +1,20 @@
-import { getLocalStorage, loadHeaderFooter } from "./utils.mjs";
+import { formDataToJSON, getLocalStorage, loadHeaderFooter } from "./utils.mjs";
+import ExternalServices from "./ExternalServices.mjs"
 loadHeaderFooter();
+function packageItems(items) {
+  const simplifiedItems = items.map((item) => {
+    return {
+      id: item.Id,
+      name: item.Name,
+      price: item.FinalPrice,
+      quantity: 1,
+    };
+  });
+  return simplifiedItems;
+}
 
 export default class CheckoutProcess {
-  constructor(key,outputSelector ) {
+  constructor(key,outputSelector,services ) {
     this.key = key;
     this.outputSelector = outputSelector;
     this.list = [];
@@ -10,6 +22,7 @@ export default class CheckoutProcess {
     this.tax = 0;
     this.shipping = 0;
     this.orderTotal = 0;
+    this.services = services;
   }
   calculateItemSubtotal() {
     const cartItems = getLocalStorage(this.key) || [];
@@ -38,12 +51,27 @@ export default class CheckoutProcess {
     this.orderTotal = this.itemTotal + this.tax + this.shipping;
     total.innerText = `$${this.orderTotal.toFixed(2)}`;
   }
+  async checkout(form) {
+    const formData = formDataToJSON(form);
+    formData.orderDate = new Date().toISOString();
+    formData.items = packageItems(this.list);
+    formData.orderTotal = this.orderTotal;
+    formData.tax = this.tax;
+    formData.shipping = this.shipping;
+    console.log(formData);
+    await this.services.checkout(formData);
+  }
 }
-
-const process = new CheckoutProcess("so-cart", ".order-summary");
+const services = new ExternalServices();
+const process = new CheckoutProcess("so-cart", ".order-summary", services);
 process.calculateItemSubtotal();
+process.calculateOrderTotal();
 const zip = document.querySelector("#zip");
 zip.addEventListener("change", () => {
   process.calculateOrderTotal();
 });
- 
+const form = document.querySelector("#checkout")
+form.addEventListener("submit", (event) => {
+  event.preventDefault()
+  process.checkout(form);
+});
