@@ -13,7 +13,7 @@ function renderCartContents() {
 
   if (cartItems.length > 0) {
     cartFooter.classList.remove("hide");
-    const total = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
+    const total = cartItems.reduce((sum, item) => sum + item.FinalPrice * (item.Quantity || 1), 0);
     const cartTotal = document.querySelector(".cart-total");
     cartTotal.innerHTML = `Total: $${total.toFixed(2)}`;
   } else {
@@ -42,7 +42,7 @@ function cartItemTemplate(item) {
     <h2 class="card__name">${item.Name}</h2>
   </a>
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>
-  <p class="cart-card__quantity">qty: 1</p>
+  <p class="cart-card__quantity">qty: ${item.Quantity || 1}</p>
   <p class="cart-card__price">$${item.FinalPrice}</p>
   
   <span class="cart-card__remove" data-id="${item.Id}">&times;</span>
@@ -51,16 +51,21 @@ function cartItemTemplate(item) {
   return newItem;
 }
 function removeFromCart(id) {
-  let cartItems = getLocalStorage("so-cart");
-  const itemIndex = cartItems.findIndex((item) => item.Id === id);
-  if (itemIndex > -1) {
-    cartItems.splice(itemIndex, 1);
-    setLocalStorage("so-cart", cartItems);
+  let cartItems = getLocalStorage("so-cart") || [];
 
+  const itemIndex = cartItems.findIndex((item) => item.Id === id);
+
+  if (itemIndex > -1) {
+    if (cartItems[itemIndex].Quantity > 1) {
+      cartItems[itemIndex].Quantity -= 1;
+    } else {
+      cartItems.splice(itemIndex, 1);
+    }
+
+    setLocalStorage("so-cart", cartItems);
     renderCartContents();
   }
 }
-
 renderCartContents();
 
 loadHeaderFooter();
