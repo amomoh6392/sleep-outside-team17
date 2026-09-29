@@ -19,6 +19,44 @@
       <section class="products">
         <h2>Review & Place your Order</h2>
       </section>
+
+      <form id="checkoutForm">
+  <h2>Customer Information</h2>
+
+  <input type="text" id="fname" name="fname" placeholder="First Name" required>
+
+  <input type="text" id="lname" name="lname" placeholder="Last Name" required>
+
+  <input type="text" id="street" name="street" placeholder="Street Address" required>
+
+  <input type="text" id="city" name="city" placeholder="City" required>
+
+  <input type="text" id="state" name="state" placeholder="State" required>
+
+  <input type="text" id="zip" name="zip" placeholder="Zip Code" required>
+
+  <h2>Payment</h2>
+
+  <input type="text" id="cardNumber" placeholder="Card Number" required>
+
+  <input type="text" id="expiration" placeholder="MM/YY" required>
+
+  <input type="text" id="securityCode" placeholder="CVV" required>
+
+  <button type="submit">Checkout</button>
+</form>
+
+<section class="order-summary">
+  <h2>Order Summary</h2>
+
+  <p>Subtotal: <span id="subtotal">$0.00</span></p>
+
+  <p>Tax: <span id="tax">$0.00</span></p>
+
+  <p>Shipping: <span id="shipping">$0.00</span></p>
+
+  <p>Total: <span id="orderTotal">$0.00</span></p>
+</section>
     </main>
 
     <footer>&copy;NOT a real business</footer>
