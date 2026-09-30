@@ -8,12 +8,13 @@ export function qs(selector, parent = document) {
 
 // retrieve data from localstorage
 export function getLocalStorage(key) {
-  return JSON.parse(localStorage.getItem(key));
-   if (!data) {
-        return null;
-    }
+  const data = localStorage.getItem(key);
 
-    return JSON.parse(data);
+  if (!data) {
+    return null;
+  }
+
+  return JSON.parse(data);
 }
 // save data to local storage
 export function setLocalStorage(key, data) {
@@ -62,8 +63,8 @@ export async function loadTemplate(path) {
 }
 
 export async function loadHeaderFooter() {
-  const headerTemplate = await loadTemplate("../partials/header.html");
-  const footerTemplate = await loadTemplate("../partials/footer.html");
+  const headerTemplate = await loadTemplate("/partials/header.html");
+  const footerTemplate = await loadTemplate("/partials/footer.html");
 
   const headerElement = document.querySelector("#main-header");
   const footerElement = document.querySelector("#main-footer");
@@ -71,4 +72,38 @@ export async function loadHeaderFooter() {
 
   renderWithTemplate(headerTemplate, headerElement);
   renderWithTemplate(footerTemplate, footerElement);
+}
+export function formDataToJSON(formElement) {
+  const formData = new FormData(formElement);
+  const convertedJSON = {};
+
+  formData.forEach(function (value, key) {
+    convertedJSON[key] = value;
+  });
+
+  return convertedJSON;
+}
+
+export function alertMessage(message, scroll = true) {
+  const alert = document.createElement('div');
+
+  alert.classList.add('alert');
+
+  alert.innerHTML = `
+    <span>${message}</span>
+    <button class="alert-close" type="button">X</button>
+  `;
+
+  alert.addEventListener('click', function (e) {
+    if (e.target.tagName === 'BUTTON') {
+      this.remove();
+    }
+  });
+
+  const main = document.querySelector('main');
+  main.prepend(alert);
+
+  if (scroll) {
+    window.scrollTo(0, 0);
+  }
 }

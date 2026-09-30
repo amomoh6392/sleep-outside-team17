@@ -304,14 +304,140 @@ button {
     font-size: inherit;
     grid-template-columns: 150px auto 15%;
   }
-  @media screen and (max-width: 700px) {
-    .categories {
-      grid-template-columns: repeat(2, 1fr);
-    }
+}
+@media screen and (max-width: 700px) {
+  .categories {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
-
 footer {
   font-size: var(--small-font);
   padding: 1em;
+}
+
+/*checkout css*/
+
+.btn {
+  display: block;
+  margin: 1em auto;
+  width: fit-content;
+  background-color: var(--secondary-color);
+  padding: 0.5em 2em;
+  color: white;
+  font-size: var(--large-font);
+  cursor: pointer;
+  text-decoration: none;
+}
+/* Checkout layout */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 1100px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+}
+
+/* Order Summary */
+.order-summary {
+  width: 100%;
+  padding: 1.5rem;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.order-summary div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #ddd;
+}
+
+.order-summary div:last-child {
+  border-bottom: none;
+  margin-top: 0.5rem;
+  padding-top: 1rem;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.order-summary span:first-child {
+  font-weight: 600;
+}
+
+.order-summary span:last-child {
+  font-weight: 500;
+}
+
+/* Checkout Form */
+#checkout {
+  border: 2px solid var(--secondary-color);
+  padding: 1.5rem;
+  margin: 0;
+  border-radius: 8px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 1rem;
+  gap: 0.25rem;
+}
+
+.form-group input {
+  width: 100%;
+  box-sizing: border-box;
+  border-radius: 4px;
+  border: 2px solid var(--primary-color);
+  padding: 0.5rem;
+}
+
+.form-group label {
+  color: var(--dark-grey);
+}
+
+/* Order page heading */
+.products h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+@media screen and (min-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+    align-items: start;
+    gap: 3rem;
+  }
+}
+
+.alert {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid #d4af37;
+  background-color: #f7e7ce;
+  color: #111827;
+}
+
+.alert-close {
+  border: none;
+  background: none;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.success-message {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 2rem;
+  text-align: center;
+  border: 2px solid var(--secondary-color);
+  border-radius: 8px;
+  background-color: #f9f9f9;
 }

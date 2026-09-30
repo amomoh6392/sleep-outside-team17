@@ -1,4 +1,4 @@
-import { getLocalStorage, setLocalStorage } from "./utils.mjs";
+import { getLocalStorage, setLocalStorage, alertMessage } from "./utils.mjs";
 export default class ProductDetails {
     constructor(productId, dataSource) {
         this.productId = productId;
@@ -15,9 +15,20 @@ export default class ProductDetails {
     addProductToCart() {
         const cartItems = getLocalStorage("so-cart") || [];
 
-        cartItems.push(this.product);
+        const existingItem = cartItems.find(
+            (item) => item.Id === this.product.Id
+        );
+
+        if (existingItem) {
+            existingItem.Quantity += 1;
+        } else {
+            this.product.Quantity = 1;
+            cartItems.push(this.product);
+        }
 
         setLocalStorage("so-cart", cartItems);
+
+        alertMessage(`${this.product.Name} was added to your cart!`);
     }
     renderProductDetails(){
         productDetailsTemplate(this.product);

@@ -10,7 +10,7 @@
 
     <link rel="stylesheet" href="../css/style.css" />
 
-    <script src="../js/cart.js" type="module"></script>
+    <script src="/js/cart.js" type="module"></script>
   </head>
 
   <body>
@@ -48,12 +48,13 @@
               </h2></a
             >
             <p class="cart-card__color">Golden Oak/Saffron Yellow</p>
-            <p class="cart-card__quantity">qty: 1</p>
+            <p class="cart-card__quantity">qty: ${item.Quantity || 1}</p>
             <p class="cart-card__price">$199.99</p>
           </li> -->
         </ul>
         <div class="cart-footer hide">
           <p class="cart-total">Total:</p>
+          <a class="btn" href="/checkout/index.html">Checkout</a>
         </div>
       </section>
     </main>
