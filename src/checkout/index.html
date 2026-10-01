@@ -1,82 +1,92 @@
 <!doctype html>
-
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sleep Outside | Checkout</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <script src="../js/checkout.js" defer></script>
+</head>
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<body>
+  <header id="main-header" class="divider"></header>
 
-    <title>Sleep Outside | Checkout</title>
+  <main class="divider checkout">
+    <h2>Review & Place your Order</h2>
 
-    <link rel="stylesheet" href="css/style.css" />
-    <script type="module" src="../js/checkout.js"></script>
-  </head>
+    <section class="checkout-form">
+      <form name="checkout">
+        <input type="hidden" name="orderDate" id="orderDate" />
 
-  <body>
-    <header id="main-header" class="divider"></header>
+        <fieldset>
+          <legend>Customer Information</legend>
 
-    <main class="divider">
-      <section class="products">
-        <h2>Review & Place your Order</h2>
-      </section>
+          <div class="checkout__name">
+            <label for="fname">First Name</label>
+            <input type="text" name="fname" id="fname" required />
 
-      <form id="checkoutForm">
-  <h2>Customer Information</h2>
+            <label for="lname">Last Name</label>
+            <input type="text" name="lname" id="lname" required />
+          </div>
 
-  <input type="text" id="fname" name="fname" placeholder="First Name" required>
+          <div class="checkout__address">
+            <label for="street">Street Address</label>
+            <input type="text" name="street" id="street" required />
 
-  <input type="text" id="lname" name="lname" placeholder="Last Name" required>
+            <label for="city">City</label>
+            <input type="text" name="city" id="city" required />
 
-  <input type="text" id="street" name="street" placeholder="Street Address" required>
+            <label for="state">State</label>
+            <input type="text" name="state" id="state" required />
 
-  <input type="text" id="city" name="city" placeholder="City" required>
+            <label for="zip">Zip</label>
+            <input type="text" name="zip" id="zip" required />
+          </div>
+        </fieldset>
 
-  <input type="text" id="state" name="state" placeholder="State" required>
+        <fieldset>
+          <legend>Payment</legend>
 
-  <input type="text" id="zip" name="zip" placeholder="Zip Code" required>
+          <div class="checkout__payment">
+            <label for="cardNumber">Card Number</label>
+            <input type="text" name="cardNumber" id="cardNumber" required />
 
-  <h2>Payment</h2>
+            <label for="expiration">Expiration</label>
+            <input type="text" name="expiration" id="expiration" required />
 
-<input
-  type="text"
-  id="cardNumber"
-  name="cardNumber"
-  placeholder="Card Number"
-  required
->
+            <label for="code">CVV</label>
+            <input type="text" name="code" id="code" required />
+          </div>
+        </fieldset>
 
-<input
-  type="text"
-  id="expiration"
-  name="expiration"
-  placeholder="MM/YY"
-  required
->
+        <fieldset class="checkout-summary">
+          <legend>Order Summary</legend>
 
-<input
-  type="text"
-  id="securityCode"
-  name="securityCode"
-  placeholder="CVV"
-  required
->
+          <div class="order__summary">
+            <div>Items</div>
+            <div id="num-items"></div>
 
-  <button type="submit">Checkout</button>
-</form>
+            <div>Subtotal</div>
+            <div id="cartTotal"></div>
 
-<section class="order-summary">
-  <h2>Order Summary</h2>
+            <div>Tax</div>
+            <div id="tax"></div>
 
-  <p>Subtotal: <span id="subtotal">$0.00</span></p>
+            <div>Shipping</div>
+            <div id="shipping"></div>
 
-  <p>Tax: <span id="tax">$0.00</span></p>
+            <div>Total</div>
+            <div id="orderTotal"></div>
+          </div>
+        </fieldset>
 
-  <p>Shipping: <span id="shipping">$0.00</span></p>
+        <button type="submit" id="checkoutSubmit">
+          Checkout
+        </button>
+      </form>
+    </section>
+  </main>
 
-  <p>Total: <span id="orderTotal">$0.00</span></p>
-</section>
-    </main>
-
-    <footer>&copy;NOT a real business</footer>
-  </body>
+  <footer id="main-footer">&copy; NOT a real business</footer>
+</body>
 </html>
