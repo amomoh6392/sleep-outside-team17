@@ -1,19 +1,27 @@
 import { getLocalStorage, setLocalStorage } from "./utils.mjs";
 
 function renderCartContents() {
-  const cartItems = getLocalStorage("so-cart") || [];
-  const htmlItems = cartItems.map((item) => cartItemTemplate(item));
-  document.querySelector(".product-list").innerHTML = htmlItems.join("");
+  const cartItems = Array.isArray(getLocalStorage("so-cart")) ? getLocalStorage("so-cart") : [];
+  const productList = document.querySelector(".product-list");
+
+  if (productList) {
+    productList.innerHTML = cartItems.map((item) => cartItemTemplate(item)).join("");
+  }
 
   const cartFooter = document.querySelector(".cart-footer");
 
-  if (cartItems.length > 0) {
+  if (cartItems.length > 0 && cartFooter) {
     cartFooter.classList.remove("hide");
-    const total = cartItems.reduce((sum, item) => sum + item.FinalPrice, 0);
+    const total = cartItems.reduce((sum, item) => {
+      const price = Number(item.FinalPrice) || 0;
+      const quantity = Number(item.quantity) || 1;
+      return sum + price * quantity;
+    }, 0);
     const cartTotal = document.querySelector(".cart-total");
-    cartTotal.innerHTML = `Total: $${total.toFixed(2)}`;
-  } else {
-
+    if (cartTotal) {
+      cartTotal.innerHTML = `Total: $${total.toFixed(2)}`;
+    }
+  } else if (cartFooter) {
     cartFooter.classList.add("hide");
   }
 
@@ -27,32 +35,32 @@ function renderCartContents() {
 }
 
 function cartItemTemplate(item) {
-  const newItem = `<li class="cart-card divider">
-  <a href="#" class="cart-card__image">
-    <img
-      src="${item.Image}"
-      alt="${item.Name}"
-    />
-  </a>
-  <a href="#">
-    <h2 class="card__name">${item.Name}</h2>
-  </a>
-  <p class="cart-card__color">${item.Colors[0].ColorName}</p>
-  <p class="cart-card__quantity">qty: 1</p>
-  <p class="cart-card__price">$${item.FinalPrice}</p>
-  
-  <span class="cart-card__remove" data-id="${item.Id}">&times;</span>
-</li>`;
+  const itemName = item.Name || item.NameWithoutBrand || "Product";
+  const colorName = item.Colors?.[0]?.ColorName || "Color unavailable";
+  const quantity = Number(item.quantity) || 1;
+  const price = Number(item.FinalPrice) || 0;
 
-  return newItem;
+  return `<li class="cart-card divider">
+    <a href="#" class="cart-card__image">
+      <img src="${item.Image}" alt="${itemName}" />
+    </a>
+    <a href="#">
+      <h2 class="card__name">${itemName}</h2>
+    </a>
+    <p class="cart-card__color">${colorName}</p>
+    <p class="cart-card__quantity">qty: ${quantity}</p>
+    <p class="cart-card__price">$${price.toFixed(2)}</p>
+    <span class="cart-card__remove" data-id="${item.Id}">&times;</span>
+  </li>`;
 }
+
 function removeFromCart(id) {
-  let cartItems = getLocalStorage("so-cart");
+  let cartItems = Array.isArray(getLocalStorage("so-cart")) ? getLocalStorage("so-cart") : [];
   const itemIndex = cartItems.findIndex((item) => item.Id === id);
+
   if (itemIndex > -1) {
     cartItems.splice(itemIndex, 1);
     setLocalStorage("so-cart", cartItems);
-
     renderCartContents();
   }
 }
