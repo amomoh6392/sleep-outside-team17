@@ -24,13 +24,12 @@ export default class ProductDetails {
 
   addProductToCart() {
     const cartItems = Array.isArray(getLocalStorage("so-cart")) ? getLocalStorage("so-cart") : [];
-    const existingProduct = cartItems.find((item) => item.Id === this.product.Id);
+    const existingProductIndex = cartItems.findIndex((item) => String(item.Id) === String(this.product.Id));
 
-    if (existingProduct) {
-      existingProduct.quantity = (existingProduct.quantity || 1) + 1;
+    if (existingProductIndex >= 0) {
+      cartItems[existingProductIndex].quantity = (cartItems[existingProductIndex].quantity || 1) + 1;
     } else {
-      this.product.quantity = 1;
-      cartItems.push(this.product);
+      cartItems.push({ ...this.product, quantity: 1 });
     }
 
     setLocalStorage("so-cart", cartItems);
