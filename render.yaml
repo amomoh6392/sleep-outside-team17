@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: sleep-outside-team17
+    runtime: static
+    buildCommand: npm ci && npm run build
+    staticPublishPath: ./dist
