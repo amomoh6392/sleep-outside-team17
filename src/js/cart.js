@@ -1,4 +1,5 @@
 import {
+  addImageFallback,
   getLocalStorage,
   loadHeaderFooter,
   setLocalStorage,
@@ -8,6 +9,7 @@ function renderCartContents() {
   const cartItems = getLocalStorage("so-cart") || [];
   const htmlItems = cartItems.map((item) => cartItemTemplate(item));
   document.querySelector(".product-list").innerHTML = htmlItems.join("");
+  addImageFallback(document.querySelector(".product-list"));
   const cartFooter = document.querySelector(".cart-footer");
 
   if (cartItems.length > 0) {
@@ -33,13 +35,13 @@ function renderCartContents() {
 
 function cartItemTemplate(item) {
   const newItem = `<li class="cart-card divider">
-  <a href="#" class="cart-card__image">
+  <a href="/product_pages/index.html?product=${encodeURIComponent(item.Id)}" class="cart-card__image">
     <img
       src="${item.Images.PrimaryMedium}"
       alt="${item.Name}"
     />
   </a>
-  <a href="#">
+  <a href="/product_pages/index.html?product=${encodeURIComponent(item.Id)}">
     <h2 class="card__name">${item.Name}</h2>
   </a>
   <p class="cart-card__color">${item.Colors[0].ColorName}</p>

@@ -13,6 +13,13 @@
 - You must have Node installed to run the following commands.
 [WDD 330 Setup Environment](https://byui-cse.github.io/wdd330-ww-course/intro/)
 
+### Product data
+
+The tents, backpacks, and sleeping-bag catalogs are bundled locally. The
+hammocks catalog and checkout require the course API; set its base URL in a
+root `.env` file as `VITE_SERVER_URL=https://your-api-base/`. The base URL
+should point to the API root, and Vite must be restarted after changing it.
+
 ### Common Workflow Commands
 
 - `npm run lint` to run ESLint against your code to find errors.
