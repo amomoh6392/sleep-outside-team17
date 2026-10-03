@@ -180,6 +180,11 @@ button {
   max-width: 250px;
 }
 
+.product-list__message {
+  list-style: none;
+  padding: 1rem;
+}
+
 .product-card h2,
 .product-card h3,
 .product-card p {
