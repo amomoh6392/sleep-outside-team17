@@ -7,7 +7,12 @@ loadHeaderFooter();
 const category = getParam("category");
 
 const title = document.querySelector("#product-list-title");
-title.textContent = `Top Products: ${category}`;
+const categoryTitle = category
+  ? category
+      .replace(/-/g, " ")
+      .replace(/\b\w/g, (letter) => letter.toUpperCase())
+  : "Products";
+title.textContent = `Top Products: ${categoryTitle}`;
 
 const dataSource = new ExternalServices();
 
