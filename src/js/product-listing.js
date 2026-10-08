@@ -1,6 +1,6 @@
 
 import ProductData from './ProductData.mjs';
-import ProductList from './productlist.mjs';
+import ProductList from './productList.mjs';
 import { loadHeaderFooter, getParam } from './utils.mjs';
 
 loadHeaderFooter();
