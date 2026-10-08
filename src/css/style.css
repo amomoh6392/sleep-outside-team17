@@ -181,7 +181,7 @@ button {
 }
 
 .product-card img {
-  width: 100%;
+  width: 99%;
   height: 250px;
   object-fit: contain;
 }
