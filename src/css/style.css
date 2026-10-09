@@ -290,6 +290,33 @@ button {
   margin-top: 0.75rem;
 }
 
+.search-container {
+  position: relative;
+  max-width: 500px;
+  margin: 1rem auto 2rem;
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+#product-search {
+  width: 100%;
+  padding: 0.8rem 1rem 0.8rem 2.5rem;
+  border: 2px solid #ccc;
+  border-radius: 25px;
+}
+
+.no-results {
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 2rem;
+  color: #666;
+}
+
 @media screen and (min-width: 500px) {
   body {
     max-width: 1080px;
