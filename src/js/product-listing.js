@@ -14,4 +14,9 @@ const dataSource = new ExternalServices();
 const listElement = document.querySelector(".product-list");
 
 const productList = new ProductList(category, dataSource, listElement);
-productList.init();
+await productList.init();
+
+const searchInput = document.querySelector("#product-search");
+searchInput.addEventListener("input", (event) => {
+productList.filterProducts(event.target.value);
+});
