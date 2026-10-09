@@ -16,12 +16,26 @@ export default class ProductList{
         this.category = category;
         this.dataSource = dataSource;
         this.listElement = listElement;
+        //store all products after they are loaded so that i can search through them later.
+        this.products = []
+        
     }
     async init() {
-        const list = await this.dataSource.getData(this.category);
-        this.renderList(list);
+        //change 'const list' to 'this.products' so that the products are stored in the class
+        this.products = await this.dataSource.getData(this.category);
+        this.renderList(this.products);
     }
+
     renderList(list) {
         renderListWithTemplate(productCardTemplate, this.listElement, list);
     }
+
+ filterProducts(searchTerm) {
+    const filteredProducts = this.products.filter((product) =>
+        product.NameWithoutBrand
+            .toLowerCase()
+            .includes(searchTerm.toLowerCase()) || product.Brand.Name.toLowerCase().includes(searchTerm.toLowerCase())
+     );
+    this.renderList(filteredProducts);
+ }
 }
