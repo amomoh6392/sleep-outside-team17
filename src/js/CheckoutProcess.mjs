@@ -1,5 +1,5 @@
 import { formDataToJSON, getLocalStorage, loadHeaderFooter, alertMessage } from "./utils.mjs";
-import ExternalServices from "./externalServices.mjs"
+import ExternalServices from "./ExternalServices.mjs"
 loadHeaderFooter();
 function packageItems(items) {
   const simplifiedItems = items.map((item) => {
