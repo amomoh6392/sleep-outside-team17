@@ -36,6 +36,11 @@ export default class ProductList{
             .toLowerCase()
             .includes(searchTerm.toLowerCase()) || product.Brand.Name.toLowerCase().includes(searchTerm.toLowerCase())
      );
-    this.renderList(filteredProducts);
+     if (filteredProducts.length > 0){
+        this.renderList(filteredProducts); 
+     } else {
+         this.listElement.innerHTML = `<p class="no-results">No products found matching your search.</p>`
+     }
+    
  }
 }
